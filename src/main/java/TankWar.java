@@ -6,7 +6,7 @@ public class TankWar {
     public static void main(String[] args) {
         JFrame frame = new JFrame();
 
-        GameClient gameClient = new GameClient(1024,768);
+        final GameClient gameClient = new GameClient(1024,768);
         frame.add(gameClient);
         frame.setTitle("坦克大戰");
         frame.setVisible(true);
@@ -18,7 +18,7 @@ public class TankWar {
         frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
+                gameClient.keyPressed(e);
             }
 
             @Override

@@ -8,6 +8,7 @@ public class Tank {
     private int x;
     private int y;
     private Direction direction;
+    private int speed =5;
 
     public Tank(int x, int y, Direction direction) {
         this.x = x;
@@ -37,6 +38,14 @@ public class Tank {
 
     public void setDirection(Direction direction) {
         this.direction = direction;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     public Image getImage(){

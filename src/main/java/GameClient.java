@@ -17,6 +17,13 @@ public class GameClient extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.drawImage(new ImageIcon("assets/images/itankD.png").getImage(),487,360,null);
+        g.drawImage(new ImageIcon("assets/images/itankD.png").getImage(),getCenterPosX(47),getCenterPosY(47),null);
+    }
+
+    private int getCenterPosX(int width){
+        return (screenWidth-width)/2;
+    }
+    private int getCenterPosY(int Heidth){
+        return (screenHeight-Heidth)/2;
     }
 }

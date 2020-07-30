@@ -13,7 +13,7 @@ public class TankWar {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
 
-        gameClient.repaint();
+        //gameClient.repaint();
 
         frame.addKeyListener(new KeyAdapter() {
             @Override

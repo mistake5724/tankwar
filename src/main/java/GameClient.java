@@ -6,7 +6,7 @@ public class GameClient extends JComponent {
     private int screenHeight;
 
     GameClient(){
-        this.setPreferredSize(new Dimension(800,600));
+        this.setPreferredSize(new Dimension(1024,768));
     }
 
     public GameClient(int screenWidth, int screenHeight) {
@@ -15,5 +15,8 @@ public class GameClient extends JComponent {
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
     }
 
-
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.drawImage(new ImageIcon("assets/images/itankD.png").getImage(),487,360,null);
+    }
 }

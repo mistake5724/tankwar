@@ -1,9 +1,13 @@
+import com.sun.javafx.scene.traversal.Direction;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class GameClient extends JComponent {
     private int screenWidth;
     private int screenHeight;
+
+    private Tank playerTank;
 
     GameClient(){
         this.setPreferredSize(new Dimension(1024,768));
@@ -13,11 +17,17 @@ public class GameClient extends JComponent {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
+
+        init();
+    }
+
+    public void init(){
+        playerTank = new Tank(getCenterPosX(47),getCenterPosY(47), Direction.DOWN);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.drawImage(new ImageIcon("assets/images/itankD.png").getImage(),getCenterPosX(47),getCenterPosY(47),null);
+        g.drawImage(playerTank.getImage(),getCenterPosX(47),getCenterPosY(47),null);
     }
 
     private int getCenterPosX(int width){

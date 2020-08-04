@@ -1,8 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Tank {
-
+public class Tank{
     private int x;
     private int y;
     private Direction direction;

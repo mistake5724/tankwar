@@ -1,20 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Wall {
-    private int x;
-    private int y;
+public class Wall extends GameObject {
     private boolean horizontal;
     private int bricks;
-    private Image image;
 
-    public Wall(int x, int y, boolean horizontal, int bricks) {
-        this.x = x;
-        this.y = y;
+    Wall(int x, int y, boolean horizontal, int bricks,Image image) {
         this.horizontal = horizontal;
         this.bricks = bricks;
-
-        image =new ImageIcon("assets/images/brick.png").getImage();
     }
 
     public void draw(Graphics g){

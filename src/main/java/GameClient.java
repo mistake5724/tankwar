@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameClient extends JComponent {
@@ -9,6 +10,7 @@ public class GameClient extends JComponent {
     private int screenHeight;
     private Tank playerTank;
     private List<Tank> enemyTank=new ArrayList<>();
+    private List<Wall> walls=new ArrayList<>();
     private boolean stop;
 
     GameClient(){
@@ -36,12 +38,18 @@ public class GameClient extends JComponent {
 
     public void init(){
 
-        playerTank = new Tank(getCenterPosX(47),getCenterPosY(47), Direction.DOWN);
+        playerTank = new Tank(getCenterPosX(47),100, Direction.DOWN);
         for(int i = 0;i < 3;i++){
             for(int j = 0 ;j < 4;j++){
                 enemyTank.add(new Tank(300+j*80,500+i*80,Direction.UP,true));
             }
         }
+        Wall[] walls={
+                new Wall(250,150,true,15),
+                new Wall(150,200,false,15),
+                new Wall(800,200,false,15),
+        };
+        this.walls.addAll(Arrays.asList(walls));
     }
 
     @Override
@@ -49,6 +57,9 @@ public class GameClient extends JComponent {
         playerTank.draw(g);
         for(Tank tank: enemyTank){
             tank.draw(g);
+        }
+        for (Wall wall:walls){
+            wall.draw(g);
         }
     }
 

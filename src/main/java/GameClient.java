@@ -1,11 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameClient extends JComponent {
     private int screenWidth;
     private int screenHeight;
     private Tank playerTank;
+    private List<Tank> enemyTank=new ArrayList<>();
     private boolean stop;
 
     GameClient(){
@@ -32,12 +35,21 @@ public class GameClient extends JComponent {
     }
 
     public void init(){
-        playerTank = new Tank(getCenterPosX(47),getCenterPosY(47), Direction.UP);
+
+        playerTank = new Tank(getCenterPosX(47),getCenterPosY(47), Direction.DOWN);
+        for(int i = 0;i < 3;i++){
+            for(int j = 0 ;j < 4;j++){
+                enemyTank.add(new Tank(300+j*80,500+i*80,Direction.UP,true));
+            }
+        }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         playerTank.draw(g);
+        for(Tank tank: enemyTank){
+            tank.draw(g);
+        }
     }
 
     private int getCenterPosX(int width){

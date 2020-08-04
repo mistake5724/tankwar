@@ -37,7 +37,7 @@ public class GameClient extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.drawImage(playerTank.getImage(),playerTank.getX(),playerTank.getY(),null);
+        playerTank.draw(g);
     }
 
     private int getCenterPosX(int width){
@@ -47,25 +47,39 @@ public class GameClient extends JComponent {
         return (screenHeight-Heidth)/2;
     }
     public void keyPressed(KeyEvent e){
+        boolean[] dirs=playerTank.getDirs();
         switch (e.getKeyCode()){
             case KeyEvent.VK_UP:
-                playerTank.setDirection(Direction.UP);
-                //playerTank.setY(playerTank.getY()-playerTank.getSpeed());
+                dirs[0]=true;
                 break;
             case KeyEvent.VK_DOWN:
-                playerTank.setDirection(Direction.DOWN);
-                //playerTank.setY(playerTank.getY()+playerTank.getSpeed());
+                dirs[1]=true;
                 break;
             case KeyEvent.VK_LEFT:
-                playerTank.setDirection(Direction.LEFT);
-                //playerTank.setX(playerTank.getX()-playerTank.getSpeed());
+                dirs[2]=true;
                 break;
             case KeyEvent.VK_RIGHT:
-                playerTank.setDirection(Direction.RIGHT);
-                //playerTank.setX(playerTank.getX()+playerTank.getSpeed());
+                dirs[3]=true;
                 break;
             default:
         }
-        playerTank.move();
+    }
+    public void keyReleased(KeyEvent e){
+        boolean[] dirs=playerTank.getDirs();
+        switch (e.getKeyCode()){
+            case KeyEvent.VK_UP:
+                dirs[0]=false;
+                break;
+            case KeyEvent.VK_DOWN:
+                dirs[1]=false;
+                break;
+            case KeyEvent.VK_LEFT:
+                dirs[2]=false;
+                break;
+            case KeyEvent.VK_RIGHT:
+                dirs[3]=false;
+                break;
+            default:
+        }
     }
 }

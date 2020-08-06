@@ -3,14 +3,14 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GameClient extends JComponent {
     private int screenWidth;
     private int screenHeight;
     private Tank playerTank;
-    private List<Tank> enemyTank=new ArrayList<>();
-    private List<Wall> walls=new ArrayList<>();
+    private List<GameObject> gameObjects=new ArrayList<>();
     private boolean stop;
 
     GameClient(){
@@ -37,30 +37,38 @@ public class GameClient extends JComponent {
     }
 
     public void init(){
+                Image[] brickImage={Tools.getImage("brick.png")};
+        Image[] iTankImage=new Image[8];
+        Image[] eTankImage=new Image[8];
 
-        playerTank = new Tank(getCenterPosX(47),100, Direction.DOWN);
+        String[] subName={"U.png","D.png","L.png","R.png","RU.png","LU.png","RD.png","LD.png",};
+
+        for (int i=0;i<iTankImage.length;i++){
+            iTankImage[i]=Tools.getImage("itank"+subName[i]);
+            eTankImage[i]=Tools.getImage("etank"+subName[i]);
+        }
+
+        playerTank = new Tank(getCenterPosX(47),100, Direction.DOWN,iTankImage);
         for(int i = 0;i < 3;i++){
             for(int j = 0 ;j < 4;j++){
-                enemyTank.add(new Tank(300+j*80,500+i*80,Direction.UP,true));
+                gameObjects.add(new Tank(300+j*80,500+i*80,Direction.UP,true,eTankImage));
             }
         }
-        Image image =Tools.getImage("brick.png");
         Wall[] walls={
-                new Wall(250,150,true,15,image),
-                new Wall(150,200,false,15,image),
-                new Wall(800,200,false,15,image),
+                new Wall(250,150,true,15,brickImage),
+                new Wall(150,200,false,15,brickImage),
+                new Wall(800,200,false,15,brickImage),
         };
-        this.walls.addAll(Arrays.asList(walls));
+        gameObjects.add(playerTank);
+        Collections.addAll(gameObjects, walls);
     }
+
 
     @Override
     protected void paintComponent(Graphics g) {
         playerTank.draw(g);
-        for(Tank tank: enemyTank){
-            tank.draw(g);
-        }
-        for (Wall wall:walls){
-            wall.draw(g);
+        for(GameObject object: gameObjects){
+            object.draw(g);
         }
     }
 

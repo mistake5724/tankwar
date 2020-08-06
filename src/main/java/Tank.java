@@ -1,20 +1,17 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Tank{
-    private int x;
-    private int y;
+public class Tank extends GameObject{
     private Direction direction;
     private int speed;
     private boolean[] dirs=new boolean[4];
     private boolean enemy;
 
-    public Tank(int x, int y, Direction direction) {
-        this(x,y,direction,false);
+    public Tank(int x, int y, Direction direction,Image[] images) {
+        this(x,y,direction,false,images);
     }
-    public Tank(int x, int y, Direction direction,boolean enemy) {
-        this.x = x;
-        this.y = y;
+    public Tank(int x, int y, Direction direction,boolean enemy,Image[] images) {
+        super(x,y,images);
         this.direction = direction;
         this.enemy=enemy;
         speed =5;
@@ -98,33 +95,12 @@ public class Tank{
                 break;
         }
     }
-
-    public Image getImage(){
-        String name =enemy? "etank":"itank";
-        if(direction==Direction.UP)
-            return new ImageIcon("assets/images/"+name+"U.png").getImage();
-        if(direction==Direction.DOWN)
-            return new ImageIcon("assets/images/"+name+"D.png").getImage();
-        if(direction==Direction.LEFT)
-            return new ImageIcon("assets/images/"+name+"L.png").getImage();
-        if(direction==Direction.RIGHT)
-            return new ImageIcon("assets/images/"+name+"R.png").getImage();
-        if(direction==Direction.RIGHT_UP)
-            return new ImageIcon("assets/images/"+name+"RU.png").getImage();
-        if(direction==Direction.RIGHT_DOWN)
-            return new ImageIcon("assets/images/"+name+"RD.png").getImage();
-        if(direction==Direction.LEFT_UP)
-            return new ImageIcon("assets/images/"+name+"LU.png").getImage();
-        if(direction==Direction.LEFT_DOWN)
-            return new ImageIcon("assets/images/"+name+"LD.png").getImage();
-        return null;
-    }
     public void draw(Graphics g){
         if (!isStop()) {
             determineDirection();
             move();
         }
-        g.drawImage(getImage(),x,y,null);
+        g.drawImage(image[direction.ordinal()],x,y,null);
     }
     public boolean isStop(){
         for (boolean dir: dirs){

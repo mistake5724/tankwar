@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,8 +12,8 @@ public class GameClient extends JComponent {
     private List<GameObject> gameObjects=new ArrayList<>();
     private boolean stop;
 
-    GameClient(){
-        this.setPreferredSize(new Dimension(1024,768));
+    public List<GameObject> getGameObjects(){
+        return gameObjects;
     }
 
     public GameClient(int screenWidth, int screenHeight) {

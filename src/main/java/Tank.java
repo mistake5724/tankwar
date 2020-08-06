@@ -64,6 +64,8 @@ public class Tank extends GameObject{
     }
 
     public void move(){
+        oldX=x;
+        oldY=y;
         switch (direction){
             case UP:
                 y -= speed;
@@ -94,11 +96,34 @@ public class Tank extends GameObject{
                 y += speed;
                 break;
         }
+
+    }
+    public void collision(){
+        if(x<0){
+            x=0;
+        }else if(x>TankWar.gameClient.getWidth()-width){
+            x=TankWar.gameClient.getWidth()-width;
+        }
+        if(y<0){
+            y=0;
+        }else if(y>TankWar.gameClient.getHeight()-height){
+            y=TankWar.gameClient.getHeight()-height;
+        }
+        for(GameObject object:TankWar.gameClient.getGameObjects()){
+            if(object!=this){
+                if(object.getRectangle().intersects(getRectangle())){
+                    x=oldX;
+                    y=oldY;
+                    return;
+                }
+            }
+        }
     }
     public void draw(Graphics g){
         if (!isStop()) {
             determineDirection();
             move();
+            collision();
         }
         g.drawImage(image[direction.ordinal()],x,y,null);
     }

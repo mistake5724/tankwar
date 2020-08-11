@@ -1,19 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Tank extends GameObject{
-    private Direction direction;
-    private int speed;
-    private boolean[] dirs=new boolean[4];
-    private boolean enemy;
+public class Tank extends MoveObject{
+
 
     public Tank(int x, int y, Direction direction,Image[] images) {
         this(x,y,direction,false,images);
     }
     public Tank(int x, int y, Direction direction,boolean enemy,Image[] images) {
-        super(x,y,images);
-        this.direction = direction;
-        this.enemy=enemy;
+        super(x, y,direction,enemy,images);
         speed =5;
     }
 
@@ -63,41 +58,7 @@ public class Tank extends GameObject{
         else if(!dirs[0]&&dirs[1]&&dirs[2]&&!dirs[3]) direction=Direction.LEFT_DOWN;
     }
 
-    public void move(){
-        oldX=x;
-        oldY=y;
-        switch (direction){
-            case UP:
-                y -= speed;
-                break;
-            case DOWN:
-                y += speed;
-                break;
-            case LEFT:
-                x -= speed;
-                break;
-            case RIGHT:
-                x += speed;
-                break;
-            case RIGHT_UP:
-                x += speed;
-                y -= speed;
-                break;
-            case RIGHT_DOWN:
-                x += speed;
-                y += speed;
-                break;
-            case LEFT_UP:
-                x -= speed;
-                y -= speed;
-                break;
-            case LEFT_DOWN:
-                x -= speed;
-                y += speed;
-                break;
-        }
 
-    }
     public void collision(){
         if(x<0){
             x=0;
@@ -109,6 +70,7 @@ public class Tank extends GameObject{
         }else if(y>TankWar.gameClient.getHeight()-height){
             y=TankWar.gameClient.getHeight()-height;
         }
+
         for(GameObject object:TankWar.gameClient.getGameObjects()){
             if(object!=this){
                 if(object.getRectangle().intersects(getRectangle())){
@@ -134,5 +96,11 @@ public class Tank extends GameObject{
             }
         }
         return true;
+    }
+    public void fire(){
+                        TankWar.gameClient.addGameObject(
+                        new Bullet(x+width/2-GameClient.BulletImage[0].getWidth(null)/2,
+                                y+height/2-GameClient.BulletImage[0].getHeight(null)/2,
+                                direction,enemy,GameClient.BulletImage));
     }
 }

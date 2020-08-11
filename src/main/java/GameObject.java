@@ -9,6 +9,7 @@ public abstract class GameObject {
     protected Image[] image;
     protected int width;
     protected int height;
+    protected boolean alive;
 
     public GameObject(int x,int y, Image[] image){
         this.x=x;
@@ -16,6 +17,7 @@ public abstract class GameObject {
         this.image=image;
         width=image[0].getWidth(null);
         height=image[0].getHeight(null);
+        alive =true;
     }
 
     public Rectangle getRectangle(){
@@ -23,4 +25,5 @@ public abstract class GameObject {
     }
 
     abstract void draw(Graphics g);
+
 }

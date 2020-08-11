@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class GameClient extends JComponent {
@@ -15,6 +16,7 @@ public class GameClient extends JComponent {
     public List<GameObject> getGameObjects(){
         return gameObjects;
     }
+    public static Image[] BulletImage=new Image[8];
 
     public GameClient(int screenWidth, int screenHeight) {
         this.screenWidth = screenWidth;
@@ -35,6 +37,10 @@ public class GameClient extends JComponent {
         }).start();
     }
 
+    public void addGameObject(GameObject object){
+        gameObjects.add(object);
+    }
+
     public void init(){
                 Image[] brickImage={Tools.getImage("brick.png")};
         Image[] iTankImage=new Image[8];
@@ -45,6 +51,7 @@ public class GameClient extends JComponent {
         for (int i=0;i<iTankImage.length;i++){
             iTankImage[i]=Tools.getImage("itank"+subName[i]);
             eTankImage[i]=Tools.getImage("etank"+subName[i]);
+            BulletImage[i]=Tools.getImage("missile"+subName[i]);
         }
 
         playerTank = new Tank(getCenterPosX(47),100, Direction.DOWN,iTankImage);
@@ -69,6 +76,12 @@ public class GameClient extends JComponent {
         for(GameObject object: gameObjects){
             object.draw(g);
         }
+        Iterator<GameObject> iterator =gameObjects.iterator();
+        while (iterator.hasNext()){
+            if (!(iterator.next()).alive){
+                iterator.remove();
+            }
+        }
     }
 
     private int getCenterPosX(int width){
@@ -91,6 +104,9 @@ public class GameClient extends JComponent {
                 break;
             case KeyEvent.VK_RIGHT:
                 dirs[3]=true;
+                break;
+            case KeyEvent.VK_SPACE:
+                playerTank.fire();
                 break;
             default:
         }

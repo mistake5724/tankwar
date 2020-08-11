@@ -57,7 +57,7 @@ public class GameClient extends JComponent {
         playerTank = new Tank(getCenterPosX(47),100, Direction.DOWN,iTankImage);
         for(int i = 0;i < 3;i++){
             for(int j = 0 ;j < 4;j++){
-                gameObjects.add(new Tank(300+j*80,500+i*80,Direction.UP,true,eTankImage));
+                gameObjects.add(new Tank(300+j*80,500+i*80, Direction.UP,true,eTankImage));
             }
         }
         Wall[] walls={

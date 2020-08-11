@@ -1,11 +1,12 @@
 import java.awt.*;
 import java.util.List;
 
-public class Bullet extends MoveObject{
+public class Bullet extends MoveObject {
     public Bullet(int x, int y, Direction direction, boolean enemy, Image[] images) {
         super(x, y,direction,enemy,images);
-        speed = 1;
+        speed = 10;
     }
+    @Override
     public void draw(Graphics g){
         if(!alive){
             return;

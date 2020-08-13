@@ -5,16 +5,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameClient extends JComponent {
     private int screenWidth;
     private int screenHeight;
-    private Tank playerTank;
-    private List<GameObject> gameObjects=new ArrayList<>();
+    private PlayerTank playerTank;
+    private CopyOnWriteArrayList<GameObject> gameObjects=new CopyOnWriteArrayList<>();
     private boolean stop;
 
-    public List<GameObject> getGameObjects(){
-        return gameObjects;
+    public static Image[] iTankImage=new Image[8];
+    public static Image[] eTankImage=new Image[8];
+    public static Image[] ExplosionImage=new Image[10];
+
+    public CopyOnWriteArrayList<GameObject> getGameObjects(){
+        return (CopyOnWriteArrayList<GameObject>) gameObjects;
     }
     public static Image[] BulletImage=new Image[8];
 
@@ -43,8 +48,7 @@ public class GameClient extends JComponent {
 
     public void init(){
                 Image[] brickImage={Tools.getImage("brick.png")};
-        Image[] iTankImage=new Image[8];
-        Image[] eTankImage=new Image[8];
+
 
         String[] subName={"U.png","D.png","L.png","R.png","RU.png","LU.png","RD.png","LD.png",};
 
@@ -54,10 +58,14 @@ public class GameClient extends JComponent {
             BulletImage[i]=Tools.getImage("missile"+subName[i]);
         }
 
-        playerTank = new Tank(getCenterPosX(47),100, Direction.DOWN,iTankImage);
+        for(int i=0;i<ExplosionImage.length;i++){
+            ExplosionImage[i]=Tools.getImage(i+".png");
+        }
+
+        playerTank = new PlayerTank(getCenterPosX(47),100, Direction.DOWN,iTankImage);
         for(int i = 0;i < 3;i++){
             for(int j = 0 ;j < 4;j++){
-                gameObjects.add(new Tank(300+j*80,500+i*80, Direction.UP,true,eTankImage));
+                gameObjects.add(new EnemyTank(300+j*80,500+i*80, Direction.UP,true,eTankImage));
             }
         }
         Wall[] walls={
@@ -76,12 +84,17 @@ public class GameClient extends JComponent {
         for(GameObject object: gameObjects){
             object.draw(g);
         }
-        Iterator<GameObject> iterator =gameObjects.iterator();
-        while (iterator.hasNext()){
-            if (!(iterator.next()).alive){
-                iterator.remove();
-            }
+        for(GameObject object: gameObjects){
+            if(!object.alive)
+            gameObjects.remove(object);
         }
+
+//        Iterator<GameObject> iterator =gameObjects.iterator();
+//        while (iterator.hasNext()){
+//            if (!(iterator.next()).alive){
+//                iterator.remove();
+//            }
+//        }
     }
 
     private int getCenterPosX(int width){
@@ -107,6 +120,9 @@ public class GameClient extends JComponent {
                 break;
             case KeyEvent.VK_SPACE:
                 playerTank.fire();
+                break;
+            case KeyEvent.VK_X:
+                playerTank.superFire();
                 break;
             default:
         }

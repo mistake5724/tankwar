@@ -1,4 +1,7 @@
+import org.omg.CORBA.Object;
+
 import java.awt.*;
+import java.util.Objects;
 
 public class Tank extends MoveObject {
 
@@ -30,6 +33,9 @@ public class Tank extends MoveObject {
 
     @Override
     public void draw(Graphics g){
+        if(!alive){
+            return;
+        }
         if (!isStop()) {
             determineDirection();
             move();

@@ -78,7 +78,7 @@ public abstract class MoveObject extends GameObject{
         }
 
     }
-    public void collision(){
+    public boolean collision(){
         if(x<0){
             x=0;
         }else if(x>TankWar.gameClient.getWidth()-width){
@@ -95,10 +95,11 @@ public abstract class MoveObject extends GameObject{
                 if(object.getRectangle().intersects(getRectangle())){
                     x=oldX;
                     y=oldY;
-                    return;
+                    return true;
                 }
             }
         }
+        return false;
     }
     public void draw(Graphics g){
 

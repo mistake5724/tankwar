@@ -16,12 +16,13 @@ public class Bullet extends MoveObject {
 
         g.drawImage(image[direction.ordinal()],x,y,null);
     }
-    public void collision(){
+    @Override
+    public boolean collision(){
 
         List<GameObject> objects = TankWar.gameClient.getGameObjects();
 
         for(GameObject object:TankWar.gameClient.getGameObjects()){
-            if (object==this){
+            if (object==this || object instanceof Bullet || object instanceof Explosion){
                 continue;
             }
             if ((object instanceof Tank)){
@@ -34,8 +35,10 @@ public class Bullet extends MoveObject {
                     if ((object instanceof Tank)){
                         object.alive=false;
                     }
-                    return;
+                    TankWar.gameClient.addGameObject(new Explosion(x,y,GameClient.ExplosionImage));
+                    return true;
             }
         }
+        return false;
     }
 }

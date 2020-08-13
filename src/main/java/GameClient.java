@@ -119,9 +119,11 @@ public class GameClient extends JComponent {
                 dirs[3]=true;
                 break;
             case KeyEvent.VK_SPACE:
+                if(playerTank.alive)
                 playerTank.fire();
                 break;
             case KeyEvent.VK_X:
+                if(playerTank.alive)
                 playerTank.superFire();
                 break;
             default:
